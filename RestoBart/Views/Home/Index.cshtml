@@ -2,6 +2,16 @@
     ViewData["Title"] = "Home Page";
 }
 
+@foreach (var categoria in (Array)ViewData["categorias"])
+{
+    <span>@categoria</span>
+
+    @foreach (var platos in (Array)ViewData["categorias_" + categoria]) { 
+        <span>@platos</span>
+    }
+        
+}
+
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
