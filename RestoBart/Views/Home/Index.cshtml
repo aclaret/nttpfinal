@@ -1,20 +1,14 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
-<head>
-    
-    
-    
-</head>
-
     
 <div class="container" id="vista_resto_bart">
     <div class="row tipos-menu">
+        @*Ciclo las categorias*@
         @foreach (var categoria in (Array)ViewData["categorias"])
         {
             <div class="col-md-3 col-sm-6">
-                <a href="#entradas">
+                <a href="#@categoria">
                     <h3 class="titulo-platos">@categoria</h3>
                     <img src="images/@(categoria).png" width="250" height="250" alt="Entradas">
                 </a>
@@ -37,6 +31,7 @@
                 <h3 class="titulo-seccion">@categoria</h3>
                 <div class="col-md-offset-1 col-md-9">
                     <ul class="listado-precios">
+                        @*Ciclo el array de string de platos para mostrar el nombre*@
                         @foreach (var platos in (Array)ViewData["categorias_" + categoria])
                         {
                         <li>

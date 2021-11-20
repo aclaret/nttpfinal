@@ -24,11 +24,16 @@ namespace RestoBart.Controllers
 
         public IActionResult Index()
         {
+            //Obtengo una array de categorias desde el modelo
             Categoria[] categorias = (Categoria[])Enum.GetValues(typeof(Categoria));
+
+            //Paso las categorias a la vista
             ViewData["categorias"] = categorias;
 
             foreach (var categoria in categorias) {
+                //ACA DEBERIA TRAER LOS PLATOS CON LOS PRECIOS Y NO SOLO EL NOMBRE,PARA PODER MOSTRARLOS EN LA HOME
                 String[] platos = (from Plato in _dbContext.Platos where (Plato.Categoria == categoria) select Plato.Nombre).ToArray();
+                //Aca agrego los platos a la categoria para pasarlo a la vista
                 ViewData["categorias_" + categoria] = platos;
             }
 
