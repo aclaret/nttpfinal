@@ -7,16 +7,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RestoBart.Models
 {
-    public class Pedido
+    public class PlatosXPedidos
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int IdPlatoXPedido { get; set; }
         public int IdPedido { get; set; }
-        public Cliente IdCliente { get; set; }
-        public string Fecha { get; set; }
-        public double Monto { get; set; }
-        //public ICollection<Plato> Platos { get; set; }
-
-        public List<PlatosXPedidos> PlatosXPedidos { get; set; }
+        public Pedido Pedido { get; set; }
+        public int IdPlato { get; set; }
+        public Plato Plato { get; set; }
     }
 }

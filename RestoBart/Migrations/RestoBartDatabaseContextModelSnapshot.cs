@@ -112,13 +112,15 @@ namespace RestoBart.Migrations
                     b.Property<string>("Fecha")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdUsuario")
+                    b.Property<int?>("IdClienteIdUsuario")
                         .HasColumnType("int");
 
                     b.Property<double>("Monto")
                         .HasColumnType("float");
 
                     b.HasKey("IdPedido");
+
+                    b.HasIndex("IdClienteIdUsuario");
 
                     b.ToTable("Pedidos");
                 });
@@ -136,24 +138,56 @@ namespace RestoBart.Migrations
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PedidoIdPedido")
-                        .HasColumnType("int");
-
                     b.Property<double>("Precio")
                         .HasColumnType("float");
 
                     b.HasKey("IdPlato");
 
-                    b.HasIndex("PedidoIdPedido");
-
                     b.ToTable("Platos");
                 });
 
-            modelBuilder.Entity("RestoBart.Models.Plato", b =>
+            modelBuilder.Entity("RestoBart.Models.PlatosXPedidos", b =>
                 {
-                    b.HasOne("RestoBart.Models.Pedido", null)
-                        .WithMany("Platos")
-                        .HasForeignKey("PedidoIdPedido");
+                    b.Property<int>("IdPlatoXPedido")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("IdPedido")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdPlato")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdPlatoXPedido");
+
+                    b.HasIndex("IdPedido");
+
+                    b.HasIndex("IdPlato");
+
+                    b.ToTable("PlatosXPedidos");
+                });
+
+            modelBuilder.Entity("RestoBart.Models.Pedido", b =>
+                {
+                    b.HasOne("RestoBart.Models.Cliente", "IdCliente")
+                        .WithMany()
+                        .HasForeignKey("IdClienteIdUsuario");
+                });
+
+            modelBuilder.Entity("RestoBart.Models.PlatosXPedidos", b =>
+                {
+                    b.HasOne("RestoBart.Models.Pedido", "Pedido")
+                        .WithMany("PlatosXPedidos")
+                        .HasForeignKey("IdPedido")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RestoBart.Models.Plato", "Plato")
+                        .WithMany("PlatosXPedidos")
+                        .HasForeignKey("IdPlato")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

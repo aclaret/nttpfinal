@@ -21,5 +21,7 @@ namespace RestoBart.Models
 
         [Display(Name = "Categoría")]
         public Categoria Categoria { get; set; }
+        //public ICollection<Pedido> Pedidos { get; set; }
+        public List<PlatosXPedidos> PlatosXPedidos { get; set; }
     }
 }

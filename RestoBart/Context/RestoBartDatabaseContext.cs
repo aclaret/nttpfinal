@@ -16,7 +16,22 @@ namespace RestoBart.Context
         }
         public DbSet<Administrador> Administradores { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
-        public DbSet<Plato> Platos { get; set; }
+        
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
+            modelBuilder.Entity<PlatosXPedidos>()
+                .HasOne(b => b.Pedido)
+                .WithMany(ba => ba.PlatosXPedidos)
+                .HasForeignKey(bi => bi.IdPedido);
+
+            modelBuilder.Entity<PlatosXPedidos>()
+                .HasOne(b => b.Plato)
+                .WithMany(ba => ba.PlatosXPedidos)
+                .HasForeignKey(bi => bi.IdPlato);
+        }
+
         public DbSet<Pedido> Pedidos { get; set; }
+        public DbSet<Plato> Platos { get; set; }
+        public DbSet<PlatosXPedidos> PlatosXPedidos { get; set; }
     }
 }
