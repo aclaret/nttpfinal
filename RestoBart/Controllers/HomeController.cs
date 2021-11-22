@@ -32,15 +32,13 @@ namespace RestoBart.Controllers
 
             foreach (var categoria in categorias) {
                 //ACA DEBERIA TRAER LOS PLATOS CON LOS PRECIOS Y NO SOLO EL NOMBRE,PARA PODER MOSTRARLOS EN LA HOME
-                String[] platos = (from Plato in _dbContext.Platos where (Plato.Categoria == categoria) select Plato.Nombre).ToArray();
+                //String[] platos = (from Plato in _dbContext.Platos where (Plato.Categoria == categoria) select Plato.Nombre).ToArray();
 
-                //Plato[] platos = _dbContext.Platos.ToArray();
+                Plato[] platos = (from Plato in _dbContext.Platos where (Plato.Categoria == categoria) select Plato).ToArray();
 
                 //Aca agrego los platos a la categoria para pasarlo a la vista
                 ViewData["categorias_" + categoria] = platos;
             }
-
-            
 
             return View();
         }
