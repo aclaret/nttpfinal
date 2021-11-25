@@ -16,5 +16,6 @@ namespace RestoBart.Models
         public Pedido Pedido { get; set; }
         public int IdPlato { get; set; }
         public Plato Plato { get; set; }
+        public int Cantidad { get; set; }
     }
 }

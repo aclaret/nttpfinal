@@ -55,11 +55,32 @@ namespace RestoBart.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        
+
         [HttpPost]
-        public void AjaxGuardarPedido(String id_usuario)
+        public JsonResult AjaxGuardarPedido()
         {
-            //Console.WriteLine(JsonConvert.DeserializeObject(pedidos));
+            String idUsuario = HttpContext.Request.Form["idUsuario"];
+            String platosAll = HttpContext.Request.Form["platosPedido"];
+            String[] platos = platosAll.Split(';');
+
+            Cliente cliente = (from Cliente in _dbContext.Clientes where Cliente.IdUsuario == 1 select Cliente).Single();
+            Pedido pedido = new Pedido(cliente, DateTime.Now.ToString(), 500);;
+            PedidosController pedidos = new PedidosController(_dbContext);
+            pedidos.Create(pedido);
+
+            foreach (String plato in platos)
+            {
+                if (plato != "")
+                {
+                    String[] PlatoXCantidad = plato.Split('|');
+                    int idPlato = Int32.Parse(PlatoXCantidad[0]);
+                    int cantidadPlato = Int32.Parse(PlatoXCantidad[1]);
+
+                    Console.WriteLine("El plato seleccionado es " + idPlato + " y la cantidad es " + cantidadPlato);
+                }
+            }
+
+            return Json("true");
         }
     }
 }

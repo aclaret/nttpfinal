@@ -60,23 +60,22 @@ function renderizar_carrito() {
 function finalizar_pedido() {
     if (confirm('¿Confirmar pedido?')) {
         var pedido = new Array();
+        var platosPedido = "";
 
         carrito.forEach(function (valores_plato, id_plato) {
-            pedido[id_plato] = valores_plato.cantidad;
+            platosPedido += id_plato + "|" + valores_plato.cantidad + ";";
         });
-
-        console.log(pedido);
 
         $.ajax({
             url: "/Home/AjaxGuardarPedido",
             type: "POST",
             data: {
-                id_usuario: "2"
+                idUsuario: "2",
+                platosPedido: platosPedido
             },
             dataType: "json",
             success: function (data) {
                 console.log("Pedido realizado con éxito");
-
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 var mensaje = "Ocurrió un error generando el pedido";
