@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using RestoBart.Context;
 using RestoBart.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -52,6 +54,12 @@ namespace RestoBart.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        
+        [HttpPost]
+        public void AjaxGuardarPedido(String id_usuario)
+        {
+            //Console.WriteLine(JsonConvert.DeserializeObject(pedidos));
         }
     }
 }

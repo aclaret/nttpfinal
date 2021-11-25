@@ -54,67 +54,9 @@
         </div>
         <span><strong>Total del pedido:</strong></span><span id="total_pedido"></span>
         <br><br>
-        <input id="btn-finalizar-pedido"type="button" class="btn btn-success" value="Finalizar Pedido" />
+        <input id="btn-finalizar-pedido"type="button" class="btn btn-success" value="Finalizar Pedido" onclick="finalizar_pedido()"/>
     </div>
 </div>
 
-<script>
-    var carrito = new Array();
-    var total_venta;
-
-    function agregar_carrito(id_plato) {
-        var nombre_plato = $('#nombre_' + id_plato).text();
-        var precio_unidad = $('#precio_' + id_plato).val();
-        var cantidad = $('#cantidad_' + id_plato).val();
-
-        if (cantidad < 1 || cantidad > 100) {
-            alert("Debe ingresar una cantidad válida");
-            return false;
-        }
-
-        if (carrito[id_plato]) {
-            //Agrego la cantidad del plato
-            carrito[id_plato]['cantidad'] += parseInt(cantidad);
-        } else {
-            carrito[id_plato] = new Array();
-            carrito[id_plato]['nombre_plato'] = nombre_plato;
-            carrito[id_plato]['precio_unidad'] = parseFloat(precio_unidad);
-            carrito[id_plato]['cantidad'] = parseInt(cantidad);
-        }
-
-        //Calculo el precio total del plato
-        carrito[id_plato]['precio_total'] = carrito[id_plato]['cantidad'] * carrito[id_plato]['precio_unidad'];
-
-        calcular_total_pedido();
-        renderizar_carrito();
-    }
-
-    function calcular_total_pedido() {
-        total_venta = 0;
-
-        carrito.forEach(function (valores_plato, id_plato) {
-            total_venta += parseFloat(valores_plato.precio_total);
-        });
-
-        console.log("El total de venta es:" + total_venta);
-    }
-
-    function renderizar_carrito() {
-        //Pregunto si no esta vacío
-        if (typeof carrito !== 'undefined' && carrito.length > 0) {
-            var item;
-
-            $('#items_carrito ul').html('');
-            carrito.forEach(function (valores_plato, id_plato) {
-                item = '<li><span class="float-left">' + valores_plato.cantidad + 'x ' + valores_plato.nombre_plato + ' </span><span class="float-right"> $' + valores_plato.precio_total + '</span></li>';
-                $('#items_carrito ul').append(item);
-            });
-            
-            $('#carrito_desktop').show();
-            $('#total_pedido').html('$' + total_venta);
-        } else {
-            $('#carrito_desktop').hide();
-        }
-    }
-</script>
+<script src="~/js/carrito.js"></script>
     
