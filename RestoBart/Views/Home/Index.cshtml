@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-    
+
 <div class="container" id="vista_resto_bart">
     <div class="row tipos-menu">
         @*Ciclo las categorias*@
@@ -32,20 +32,129 @@
                 <ul class="listado-precios">
                     @*Ciclo el array de string de platos para mostrar el nombre*@
                     @foreach (var platos in (Plato[])ViewData["categorias_" + categoria])
-                     {
-                    <li>
-                        <input type="hidden" id="precio_@platos.IdPlato" value="@platos.Precio" />
-                        <span class="float-left nombre-plato" id="nombre_@platos.IdPlato">@platos.Nombre</span>
-                        <input type="button" class="btn-agregar-carrito btn btn-success" onclick="agregar_carrito(@platos.IdPlato)" value="Agregar al carrito" />
-                        <input class="form-control cantidad-plato" name="cantidad" type="number" step="1" min="0" value="0" max="100" id="cantidad_@platos.IdPlato" />
-                        <span class="precio-plato">$@platos.Precio</span>
-                    </li>
-                     }
+                    {
+                        <li>
+                            <input type="hidden" id="precio_@platos.IdPlato" value="@platos.Precio" />
+                            <span class="float-left nombre-plato" id="nombre_@platos.IdPlato">@platos.Nombre</span>
+                            <input type="button" class="btn-agregar-carrito btn btn-success" onclick="agregar_carrito(@platos.IdPlato)" value="Agregar al carrito" />
+                            <input class="form-control cantidad-plato" name="cantidad" type="number" step="1" min="0" value="0" max="100" id="cantidad_@platos.IdPlato" />
+                            <span class="precio-plato">$@platos.Precio</span>
+                        </li>
+                    }
                 </ul>
             </div>
         }
     </form>
 
+    <!-- MODAL -->
+  
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+
+
+            <div id="div-registracion">
+                <h2>¿Ya estas registrado?</h2>
+                <form name="formRegistro" id="formRegistro" method="post" action="#">
+                    <div class="form-horizontal">
+
+                        <div class="form-group">
+                            <label class="col-md-offset-2 col-md-3" for="Username">Nombre de usuario</label>
+                            <div class="col-md-7">
+                                <input type="text" name="nombre" class="form-control" minlength="6" maxlength="15" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-offset-2 col-md-3" for="Password">Contraseña</label>
+                            <div class="col-md-7">
+                                <input type="password" name="Password" class="form-control" minlength="6" maxlength="15" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.,!@@#$%^&*_=+-]).{6,15}$" title="Ingrese una password 6 y 15 (debe contener: 1 caracter especial, 1 número, 1 letra en mayúsculas, 1 letra en minúsculas)" required />
+                            </div>
+                        </div>
+
+
+                        <div class="form-group" id="div-submit">
+                            <button type="submit" name="registrar" class="btn btn-success">Ingresar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <h2>Registrarse para realizar el pedido: </h2>
+            <div id="div-registracion">
+                <form name="login" id="login" method="post" action="#">
+                    <div class="form-horizontal">
+
+                        <div class="form-group">
+                            <label class="col-md-offset-2 col-md-3" for="Username">Nombre de usuario</label>
+                            <div class="col-md-7">
+                                <input type="text" name="nombre" class="form-control" minlength="6" maxlength="15" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-offset-2 col-md-3" for="Password">Contraseña</label>
+                            <div class="col-md-7">
+                                <input type="password" name="Password" class="form-control" minlength="6" maxlength="15" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.,!@@#$%^&*_=+-]).{6,15}$" title="Ingrese una password 6 y 15 (debe contener: 1 caracter especial, 1 número, 1 letra en mayúsculas, 1 letra en minúsculas)" required />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-offset-2 col-md-3" for="Password">Repetir contraseña <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input type="password" name="Password" class="form-control" minlength="6" maxlength="15" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.,!@@#$%^&*_=+-]).{6,15}$" title="Ingrese una password 6 y 15 (debe contener: 1 caracter especial, 1 número, 1 letra en mayúsculas, 1 letra en minúsculas)" required />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-offset-2 col-md-3" for="NombreCompleto">Nombre completo</label>
+                            <div class="col-md-7">
+                                <input type="text" name="NombreCompleto" class="form-control" minlength="3" maxlength="15" title="El nombre de usuario debe tener entre 3 y 15 caracteres" required />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-offset-2 col-md-3" for="telefono">Telefono<span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input type="tel" name="telefono" class="form-control" pattern="^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$" title="Ingrese un numero valido sin 0 ni 15" required />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-offset-2 col-md-3" for="email">Email</label>
+                            <div class="col-md-7">
+                                <input type="email" name="email" class="form-control" pattern="^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$" title="Ejemplo de correo correcto: 'juan@google.com'" required />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-offset-2 col-md-3" for="direccion">Direccion </label>
+                            <div class="col-md-7">
+                                <input type="text" name="direccion" class="form-control" milength="3" maxlength="15" title="Ingrese una direccion valida entre 3 y 15 caracteres" required />
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="div-submit">
+                            <button type="submit" name="registrar" class="btn btn-success">Crear cuenta</button>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="button" id="cerrar" name="registrar" class="btn btn-outline-dark">Cerrar</button>
+                        </div>
+
+
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+   
+    <!--CARRITO-->
     <div id="carrito_desktop">
         <h4>Detalles del pedido:</h4>
         <div id="items_carrito">
@@ -54,9 +163,10 @@
         </div>
         <span><strong>Total del pedido:</strong></span><span id="total_pedido"></span>
         <br><br>
-        <input id="btn-finalizar-pedido"type="button" class="btn btn-success" value="Finalizar Pedido" onclick="finalizar_pedido()"/>
+        <!--<input id="btn-finalizar-pedido" type="button" class="btn btn-success" value="Finalizar Pedido" onclick="finalizar_pedido()" /> -->
+        <!-- Trigger/Open The Modal -->
+        <button id="myBtn" class="btn btn-success">Finalizar pedido</button>
     </div>
 </div>
 
 <script src="~/js/carrito.js"></script>
-    

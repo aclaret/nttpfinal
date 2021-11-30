@@ -54,7 +54,7 @@ namespace RestoBart.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Telefono,Email,Direccion,Piso,Departamento,IdUsuario,Nombre,Apellido,Username,Password")] Cliente cliente)
+        public async Task<IActionResult> Create([Bind("IdUsuario,Username,Password,NombreCompleto,Telefono,Email,Direccion")] Cliente cliente)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace RestoBart.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Telefono,Email,Direccion,Piso,Departamento,IdUsuario,Nombre,Apellido,Username,Password")] Cliente cliente)
+        public async Task<IActionResult> Edit(int id, [Bind("IdUsuario,Username,Password,NombreCompleto,Telefono,Email,Direccion")] Cliente cliente)
         {
             if (id != cliente.IdUsuario)
             {

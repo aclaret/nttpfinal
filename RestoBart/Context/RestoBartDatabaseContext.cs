@@ -14,7 +14,7 @@ namespace RestoBart.Context
        : base(options)
         {
         }
-        public DbSet<Administrador> Administradores { get; set; }
+
         public DbSet<Cliente> Clientes { get; set; }
         
 
