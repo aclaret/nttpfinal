@@ -82,6 +82,12 @@ namespace RestoBart.Controllers
                 if (!existe_cliente) {
 
                     cliente = new Cliente();
+                    cliente.NombreCompleto = nombre_completo;
+                    cliente.Telefono = int.Parse(telefono);
+                    cliente.Email = email;
+                    cliente.Direccion = direccion;
+                    cliente.Username = username;
+                    cliente.Password = password;
                     _dbContext.Clientes.Add(cliente);
                 } else {
                     return Json("El nombre de usuario se encuentra en uso");
@@ -99,6 +105,9 @@ namespace RestoBart.Controllers
             //Busco los platos para conocer el total del pedido
             double totalPedido = 0;
             ArrayList platos_registrar = new ArrayList();
+
+            Dictionary<int, int> platosXcantidad = new Dictionary<int, int>();
+
             foreach (String plato_pedido in platos_pedido)
             {
                 if (plato_pedido != "")
@@ -113,6 +122,8 @@ namespace RestoBart.Controllers
                     if (plato != null)
                     {
                         totalPedido += plato.Precio * cantidadPlato;
+
+                        platosXcantidad.Add(idPlato, cantidadPlato);
                         platos_registrar.Add(plato);
                     }
                 }
@@ -126,7 +137,7 @@ namespace RestoBart.Controllers
 
             foreach (Plato plato_pedido in platos_registrar)
             {
-                PlatosXPedidos platoPedido = new PlatosXPedidos(pedido.IdPedido, plato_pedido, 3);
+                PlatosXPedidos platoPedido = new PlatosXPedidos(pedido.IdPedido, plato_pedido, platosXcantidad[plato_pedido.IdPlato]);
                 _dbContext.PlatosXPedidos.Add(platoPedido);
                 _dbContext.SaveChanges();
             }

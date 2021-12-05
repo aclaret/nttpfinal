@@ -38,7 +38,7 @@ namespace RestoBart.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Ingrese una dirección válida"), MinLength(3), MaxLength(20)]
-        [Display(Name = "Dirección")]
+        [Display(Name = "Direccion")]
         public string Direccion { get; set; }
     }
 }
