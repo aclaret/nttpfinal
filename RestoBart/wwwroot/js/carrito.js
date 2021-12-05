@@ -81,22 +81,54 @@ function renderizar_carrito() {
     }
 }
 
-function finalizar_pedido() {
-    if (confirm('¿Confirmar pedido?')) {
-        var pedido = new Array();
+function finalizar_pedido(btn_accion) {
+    //Detengo el default action submit del formulario
+    event.preventDefault();
+
+    var accion = $(btn_accion).val();
+    datos_pedido = {};
+
+    if (accion == "ingresar") {
+        datos_pedido["user_accion"] = "ingresar";
+        var mensaje_accion = "¿Ingresar y confirmar pedido?";
+
+        //Realizar validaciones javascript
+        datos_pedido["username"] = $('#login_username').val();
+        datos_pedido["password"] = $('#login_password').val();
+    } else {
+        datos_pedido['user_accion'] = "registrar";
+        var mensaje_accion = "¿Registrarse y confirmar pedido?";
+
+        //Realizar validaciones javascript
+        datos_pedido['username'] = $('#username_registro').val();
+        datos_pedido['password'] = $('#password_registro').val();
+
+        //Busco todos los demás campos correspondientes al registro de usuario por el name
+        datos_pedido['nombre_completo'] = $('[name="nombre_completo"]').val();
+        datos_pedido['telefono'] = $('[name="telefono"]').val();
+        datos_pedido['email'] = $('[name="email"]').val();
+        datos_pedido['direccion'] = $('[name="direccion"]').val();
+    }
+
+    if (confirm(mensaje_accion)) {
         var platosPedido = "";
 
         carrito.forEach(function (valores_plato, id_plato) {
             platosPedido += id_plato + "|" + valores_plato.cantidad + ";";
         });
 
+        if (!platosPedido.length) {
+            alert("Error, no hay platos seleccionados");
+            return false;
+        }
+
+        //Agrego los platos al json object
+        datos_pedido['platosPedido'] = platosPedido;
+
         $.ajax({
             url: "/Home/AjaxGuardarPedido",
             type: "POST",
-            data: {
-                idUsuario: "2",
-                platosPedido: platosPedido
-            },
+            data: datos_pedido,
             dataType: "json",
             success: function (data) {
                 console.log("Pedido realizado con éxito");
