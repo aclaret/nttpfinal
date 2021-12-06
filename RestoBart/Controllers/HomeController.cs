@@ -7,9 +7,11 @@ using RestoBart.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace RestoBart.Controllers
@@ -57,9 +59,11 @@ namespace RestoBart.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+
         [HttpPost]
-        public JsonResult AjaxGuardarPedido()
+        public ActionResult AjaxGuardarPedido()
         {
+            //Inicializo variables
             Cliente cliente = null;
             Plato plato = null;
 
@@ -75,26 +79,33 @@ namespace RestoBart.Controllers
                 String email = HttpContext.Request.Form["email"];
                 String direccion = HttpContext.Request.Form["direccion"];
 
-                //Registro el usuario
-                bool existe_cliente = _dbContext.Clientes.Any(u => u.Username == username);
-
-                //Si el cliente no existe lo registro sino lanzo el error
-                if (!existe_cliente) {
-
-                    cliente = new Cliente();
-                    cliente.NombreCompleto = nombre_completo;
-                    cliente.Telefono = int.Parse(telefono);
-                    cliente.Email = email;
-                    cliente.Direccion = direccion;
-                    cliente.Username = username;
-                    cliente.Password = password;
-                    _dbContext.Clientes.Add(cliente);
-                } else {
-                    return Json("El nombre de usuario se encuentra en uso");
+                //Valido que los datos no esten en uso
+                bool existe_username = _dbContext.Clientes.Any(u => u.Username == username);
+                if (existe_username) {
+                    return Json(new { result = false, error = "El nombre de usuario se encuentra en uso" });
                 }
+
+                bool existe_email = _dbContext.Clientes.Any(u => u.Email == email);
+                if (existe_email)
+                {
+                    return Json(new { result = false, error = "Ya existe una cuenta para el email ingresado" });
+                }
+
+                cliente = new Cliente();
+                cliente.NombreCompleto = nombre_completo;
+                cliente.Telefono = int.Parse(telefono);
+                cliente.Email = email;
+                cliente.Direccion = direccion;
+                cliente.Username = username;
+                cliente.Password = password;
+                _dbContext.Clientes.Add(cliente);
             } else {
                 //Intento buscar al usuario y traigo su ID para generar el pedido
-                cliente = _dbContext.Clientes.Where(cliente => cliente.Username == username && cliente.Password == password).Single();
+                cliente = _dbContext.Clientes.Where(cliente => cliente.Username == username && cliente.Password == password).SingleOrDefault();
+
+                if (cliente == null) {
+                    return Json(new { result = false, error = "El usuario no existe o la contraseña es incorrecta"});
+                }
             }
 
             String platosAll = HttpContext.Request.Form["platosPedido"];
@@ -142,7 +153,7 @@ namespace RestoBart.Controllers
                 _dbContext.SaveChanges();
             }
 
-            return Json("true");
+            return Json(new { result = true});
         }
     }
 }

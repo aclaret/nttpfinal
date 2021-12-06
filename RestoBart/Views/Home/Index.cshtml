@@ -45,109 +45,103 @@
             </div>
         }
     </form>
+</div>
 
-    <!-- MODAL -->
-  
-    <!-- The Modal -->
-    <div id="myModal" class="modal">
-        <!-- Modal content -->
+<!-- MODAL -->
+<div class="modal fade" id="modal_form" role="dialog">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <div id="div-registracion">
-                <h2>¿Ya estas registrado?</h2>
-                <form name="form-login" id="form-login" method="post" action="#">
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            <label class="col-md-offset-2 col-md-3" for="usernme">Nombre de usuario</label>
-                            <div class="col-md-7">
-                                <input type="text" name="username" id="login_username" class="form-control" minlength="6" maxlength="15" required>
+            <div class="modal-body form">
+                    <h2>¿Ya estas registrado?</h2>
+                    <form name="form-login" id="form-login" method="post" action="#">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="control-label col-md-3" for="username">Nombre de usuario <span class="text-danger">*</span></label>
+                                <div class="col-md-9">
+                                    <input type="text" name="username" id="login_username" class="form-control" minlength="6" maxlength="15" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3" for="password">Contraseña <span class="text-danger">*</span></label>
+                                <div class="col-md-9">
+                                    <input type="password" name="password" id="login_password" class="form-control" minlength="6" maxlength="15" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.,!@@#$%^&*_=+-]).{6,15}$" title="Ingrese una password 6 y 15 (debe contener: 1 caracter especial, 1 número, 1 letra en mayúsculas, 1 letra en minúsculas)" required />
+                                </div>
+                            </div>
+                            <div class="form-group" id="div-submit">
+                                <button type="submit" name="registrar" class="btn btn-success" value="ingresar">Ingresar y finalizar</button>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-md-offset-2 col-md-3" for="password">Contraseña</label>
-                            <div class="col-md-7">
-                                <input type="password" name="password" id="login_password" class="form-control" minlength="6" maxlength="15" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.,!@@#$%^&*_=+-]).{6,15}$" title="Ingrese una password 6 y 15 (debe contener: 1 caracter especial, 1 número, 1 letra en mayúsculas, 1 letra en minúsculas)" required />
+                    </form>
+                <div id="div-registracion">
+                    <h2>Registrarse para realizar el pedido: </h2>
+                    <form name="form-registro" id="form-registro" method="post" action="#">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-md-offset-2 col-md-3" for="username">Nombre de usuario <span class="text-danger">*</span></label>
+                                <div class="col-md-7">
+                                    <input type="text" name="username" id="username_registro" class="form-control" minlength="6" maxlength="15" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-offset-2 col-md-3" for="password">Contraseña <span class="text-danger">*</span></label>
+                                <div class="col-md-7">
+                                    <input type="password" name="password" id="password_registro" class="form-control" minlength="6" maxlength="15" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.,!@@#$%^&*_=+-]).{6,15}$" title="Ingrese una password 6 y 15 (debe contener: 1 caracter especial, 1 número, 1 letra en mayúsculas, 1 letra en minúsculas)" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-offset-2 col-md-3" for="re-password">Repetir contraseña <span class="text-danger">*</span></label>
+                                <div class="col-md-7">
+                                    <input type="password" name="re-password" class="form-control" minlength="6" maxlength="15" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.,!@@#$%^&*_=+-]).{6,15}$" title="Ingrese una password 6 y 15 (debe contener: 1 caracter especial, 1 número, 1 letra en mayúsculas, 1 letra en minúsculas)" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-offset-2 col-md-3" for="nombre_completo">Nombre completo <span class="text-danger">*</span></label>
+                                <div class="col-md-7">
+                                    <input type="text" name="nombre_completo" class="form-control" minlength="3" maxlength="15" title="El nombre de usuario debe tener entre 3 y 15 caracteres" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-offset-2 col-md-3" for="telefono">Telefono<span class="text-danger">*</span></label>
+                                <div class="col-md-7">
+                                    <input type="tel" name="telefono" class="form-control" pattern="^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$" title="Ingrese un numero valido sin 0 ni 15" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-offset-2 col-md-3" for="email">Email <span class="text-danger">*</span></label>
+                                <div class="col-md-7">
+                                    <input type="email" name="email" class="form-control" pattern="^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$" title="Ejemplo de correo correcto: 'juan@google.com'" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-offset-2 col-md-3" for="direccion">Dirección <span class="text-danger">*</span></label>
+                                <div class="col-md-7">
+                                    <input type="text" name="direccion" class="form-control" milength="3" maxlength="15" title="Ingrese una direccion valida entre 3 y 15 caracteres" required />
+                                </div>
+                            </div>
+                            <div class="form-group" id="div-submit">
+                                <button type="submit" name="registrar" value="registrar" class="btn btn-success">Crear cuenta y enviar pedido</button>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" id="cerrar" name="registrar" class="btn btn-outline-dark">Cerrar</button>
                             </div>
                         </div>
-                        <div class="form-group" id="div-submit">
-                            <button type="submit" name="registrar" class="btn btn-success" onclick="finalizar_pedido(this)" value="ingresar">Ingresar y finalizar</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-            <h2>Registrarse para realizar el pedido: </h2>
-            <div id="div-registracion">
-                <form name="form-registro" id="form-registro" method="post" action="#">
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            <label class="col-md-offset-2 col-md-3" for="username">Nombre de usuario</label>
-                            <div class="col-md-7">
-                                <input type="text" name="username" id="username_registro" class="form-control" minlength="6" maxlength="15" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-offset-2 col-md-3" for="password">Contraseña</label>
-                            <div class="col-md-7">
-                                <input type="password" name="password" id="password_registro" class="form-control" minlength="6" maxlength="15" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.,!@@#$%^&*_=+-]).{6,15}$" title="Ingrese una password 6 y 15 (debe contener: 1 caracter especial, 1 número, 1 letra en mayúsculas, 1 letra en minúsculas)" required />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-offset-2 col-md-3" for="re-password">Repetir contraseña <span class="text-danger">*</span></label>
-                            <div class="col-md-7">
-                                <input type="password" name="re-password" class="form-control" minlength="6" maxlength="15" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.,!@@#$%^&*_=+-]).{6,15}$" title="Ingrese una password 6 y 15 (debe contener: 1 caracter especial, 1 número, 1 letra en mayúsculas, 1 letra en minúsculas)" required />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-offset-2 col-md-3" for="nombre_completo">Nombre completo</label>
-                            <div class="col-md-7">
-                                <input type="text" name="nombre_completo" class="form-control" minlength="3" maxlength="15" title="El nombre de usuario debe tener entre 3 y 15 caracteres" required />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-offset-2 col-md-3" for="telefono">Telefono<span class="text-danger">*</span></label>
-                            <div class="col-md-7">
-                                <input type="tel" name="telefono" class="form-control" pattern="^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$" title="Ingrese un numero valido sin 0 ni 15" required />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-offset-2 col-md-3" for="email">Email</label>
-                            <div class="col-md-7">
-                                <input type="email" name="email" class="form-control" pattern="^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$" title="Ejemplo de correo correcto: 'juan@google.com'" required />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-offset-2 col-md-3" for="direccion">Direccion </label>
-                            <div class="col-md-7">
-                                <input type="text" name="direccion" class="form-control" milength="3" maxlength="15" title="Ingrese una direccion valida entre 3 y 15 caracteres" required />
-                            </div>
-                        </div>
-                        <div class="form-group" id="div-submit">
-                            <button type="submit" name="registrar" value="registrar" onclick="finalizar_pedido(this)" class="btn btn-success">Crear cuenta</button>
-                        </div>
-                        <div class="form-group">
-                            <button type="button" id="cerrar" name="registrar" class="btn btn-outline-dark">Cerrar</button>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-
-    </div>
-
-   
-    <!--CARRITO-->
-    <div id="carrito_desktop">
-        <h4>Detalles del pedido:</h4>
-        <div id="items_carrito">
-            <ul>
-            </ul>
-        </div>
-        <span><strong>Total del pedido:</strong></span><span id="total_pedido"></span>
-        <br><br>
-        <!--<input id="btn-finalizar-pedido" type="button" class="btn btn-success" value="Finalizar Pedido" onclick="finalizar_pedido()" /> -->
-        <!-- Trigger/Open The Modal -->
-        <button id="myBtn" class="btn btn-success">Finalizar pedido</button>
     </div>
 </div>
 
-<script src="~/js/carrito.js"></script>
+<!--CARRITO-->
+<div id="carrito_desktop">
+    <h4>Detalles del pedido:</h4>
+    <div id="items_carrito">
+        <ul>
+        </ul>
+    </div>
+    <span><strong>Total del pedido:</strong></span><span id="total_pedido"></span>
+    <br><br>
+    <!--<input id="btn-finalizar-pedido" type="button" class="btn btn-success" value="Finalizar Pedido" onclick="finalizar_pedido()" /> -->
+    <!-- Trigger/Open The Modal -->
+    <button id="btn-finalizar-pedido" onclick="mostrar_form_registro()" class="btn btn-success">Finalizar pedido</button>
+</div>

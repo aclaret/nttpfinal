@@ -1,29 +1,23 @@
 ﻿var carrito = new Array();
 var total_venta;
 
-//MODAL:
+$(document).ready(function () {
+    $(document).on('submit', '#form-login', function (e) {
+        e.preventDefault();
+        finalizar_pedido("ingresar");
+    });
 
-// Get the modal
-var modal = document.getElementById("myModal");
+    $(document).on('submit', '#form-registro', function (e) {
+        e.preventDefault();
+        finalizar_pedido("registrar");
+    });
+});
 
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-
-// Get the <span> element that closes the modal
-var span = document.getElementById("cerrar");
-
-// When the user clicks on the button, open the modal
-btn.onclick = function () {
-    modal.style.display = "block";
+function mostrar_form_registro() {
+    $('#form-login')[0].reset();
+    $('#form-registro')[0].reset();
+    $('#modal_form').modal('show');
 }
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function () {
-    modal.style.display = "none";
-}
-
-
-
 
 function agregar_carrito(id_plato) {
     var nombre_plato = $('#nombre_' + id_plato).text();
@@ -57,8 +51,6 @@ function calcular_total_pedido() {
     carrito.forEach(function (valores_plato, id_plato) {
         total_venta += parseFloat(valores_plato.precio_total);
     });
-
-    console.log("El total de venta es:" + total_venta);
 }
 
 function renderizar_carrito() {
@@ -75,18 +67,15 @@ function renderizar_carrito() {
         });
 
         $('#carrito_desktop').show();
-        $('#total_pedido').html('$' + total_venta);
+        $('#total_pedido').html(' $' + total_venta);
     } else {
         $('#carrito_desktop').hide();
     }
 }
 
-function finalizar_pedido(btn_accion) {
-    //Detengo el default action submit del formulario
-    event.preventDefault();
-
-    var accion = $(btn_accion).val();
-    datos_pedido = {};
+function finalizar_pedido(accion){
+    //var accion = $(btn_accion).val();
+    var datos_pedido = {}
 
     if (accion == "ingresar") {
         datos_pedido["user_accion"] = "ingresar";
@@ -130,8 +119,14 @@ function finalizar_pedido(btn_accion) {
             type: "POST",
             data: datos_pedido,
             dataType: "json",
-            success: function (data) {
-                console.log("Pedido realizado con éxito");
+            success: function (response) {
+                if (response.result == true) {
+                    alert("Pedido realizado con exito!");
+                    location.reload();
+                } else {
+                    alert(response.error);
+                    return false;
+                }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 var mensaje = "Ocurrió un error generando el pedido";
@@ -140,6 +135,7 @@ function finalizar_pedido(btn_accion) {
                 }
                 if (mensaje != "") {
                     alert(mensaje);
+                    return false;
                 }
             }
         });
